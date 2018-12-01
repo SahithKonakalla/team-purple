@@ -61,7 +61,7 @@ class Network(object):
 
 
         thread1 = self.myThread(1, "Thread-1", 1, self)
-        thread1.start()
+        thread1.run()
         print("thread started")
 
     def startServer(self): #startServer
