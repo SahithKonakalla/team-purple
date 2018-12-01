@@ -3,11 +3,11 @@ import numpy as np
 import math
 class TargetDetector:
     def __init__(self): #sets default threshold values
-        self.minHue = 50
-        self.maxHue = 70
+        self.minHue = 0
+        self.maxHue = 0
         self.minSat = 0
         self.maxSat = 255
-        self.minVal = 230
+        self.minVal = 255
         self.maxVal = 255
         self.found = False
     def threshInputs(self, th):
@@ -61,7 +61,7 @@ class TargetDetector:
             count = count +1
             epsilon = 0.02*cv2.arcLength(cont,True)
             approx = cv2.approxPolyDP(cont, epsilon, True) #approximates a shape out of the contours (orners only)
-            if cv2.contourArea(approx) > 1000 and len(approx) == 12: #shape has 4 corners and is not extremely small
+            if cv2.contourArea(approx) > 1000 and len(approx) == 12: #shape has 12 corners
             #if right(approx,34):
                 approx2 = [approx]
                 cv2.drawContours(img, approx2, -1, (255,255,0), 10)
