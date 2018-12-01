@@ -4,9 +4,9 @@ import math
 from Target import Target
 class TargetProcessor:
     def __init__(self):
-        self.RectHeight = 0.0508
-        self.RectWidth = 0.2159
-        self.focalLen = 480
+        self.RectHeight = 0.1651
+        self.RectWidth = 0.1651
+        self.focalLen = 720
         self.horizCent = 240
         self.vertiCent = 320
         #sets non changing values when object instance is created

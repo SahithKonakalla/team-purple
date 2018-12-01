@@ -1,14 +1,9 @@
 import cv2
-import math
 
 class Target:
-    def __init__(self):
-        self.ang = math.atan2(0.0508,0.2032)
-        
-    def createTarget (self, temp):
+    
+    def __init__ (self, temp):
 
-        self.cont = temp
-        
         avgX = 0
 
         avgY = 0
@@ -20,11 +15,6 @@ class Target:
         minY = temp[0][0][1]
 
         maxY = temp[0][0][1]
-        
-        pref = temp[0]
-        
-        hyp = 0
-   
         #sets mins and maxs based on the first points x and y, to be changed later
         #temp is an input from approxpolydp, an array of points, of a single target (one rectangle)
         
@@ -41,23 +31,12 @@ class Target:
             
             if p[0][1] > maxY:
                 maxY = p[0][1]
-            
-            hyp1 = math.sqrt((temp[0][0][0]-p[0][0])**2 + (temp[0][0][1] - p[0][1])**2)
-                             
-            if hyp1 > hyp:
-                hyp = hyp1
                 
             #minX, maxX, minY, maxY will have their respective values based off all the points in temp
 
-        self.width1 = maxX-minX #width is highest x minus lowest x
+        self.width = maxX-minX #width is highest x minus lowest x
         
-        self.height1 = maxY-minY#height is highest y minus lowest y
-        
-        
-        
-        self.height = hyp*math.sin(self.ang)*0.677
-        
-        self.width = hyp*math.cos(self.ang)*0.677
+        self.height = maxY-minY#height is highest y minus lowest y
         
         avgX = (maxX+minX)/2 
         
@@ -77,9 +56,6 @@ class Target:
     def getCenter(self):
         
         return self.centerPoint
-    
-        
-            
     #returns respective values
 
         
