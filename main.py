@@ -5,6 +5,7 @@ from TargetProcessor import TargetProcessor
 from VideoDevice import VideoDevice
 from GUIManager import GUIManager
 from AppConfig import AppConfig
+from Network import Network
 #imports all classes
 
 import cv2
@@ -14,12 +15,14 @@ detector = TargetDetector()
 processor = TargetProcessor()
 camera = VideoDevice()
 
-cmdinp = ["main.py", "-d", "2", "--no-networking", "--isDebug"]
+
+cmdinp = ["main.py", "-d", "0", "--no-networking", "--isDebug"]
 interface = CmdLineInterface(cmdinp)
 
 #interface = CmdLineInterface(sys.argv) #cmdline input
 config = interface.getConfig() #AppConfig object that contains all values from cmdline inputs
 gui = GUIManager()
+network = Network()
 #creates class instances
 
 camera.startCapture(config.getDeviceID()) #inputs device id from config
@@ -30,10 +33,13 @@ if(config.getIsDebug()):
     gui.threshWindow()
 
 loop = 1
+if(config.getIsNetworking()):
+    network.userServer()
+    
 
 while(cv2.waitKey(30) != 27):
     print ("While Loop %s \n") % loop
-    thIn = [30, 9`0, 0, 255, 200, 255] #thresholding values subject to change
+    thIn = [30, 90, 0, 255, 200, 255] #thresholding values subject to change
     detector.threshInputs(thIn)
 
     image = camera.getImage() #live feed image
@@ -87,6 +93,10 @@ while(cv2.waitKey(30) != 27):
         dis = "distance: %s" % distance
         azi = "azimuth: %s" % azimuth
         alt = "altitude: %s" % altitude
+        
+        network.setDistance(distance)
+        network.setAzimuth(azimuth)
+        network.setAltitude(altitude)
         #wid = "Image Width: %s" % target.getWidth()
         
     else:
@@ -105,6 +115,9 @@ while(cv2.waitKey(30) != 27):
     gui.setText(dis, 1)
     gui.setText(azi, 2)
     gui.setText(alt, 3)
+    
+    
+    
     #adds various texts to the image in GUIManager object
     cv2.imshow("Targeting", gui.getImage()) #shows image from gui object
     loop += 1

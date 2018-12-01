@@ -28,15 +28,12 @@ public class client {
         distance = Double.parseDouble(parsed[0]);
         azimuth = Double.parseDouble(parsed[1]);
         altitude = Double.parseDouble(parsed[2]);
-        orientation = parsed[3];
         System.out.println("distance: " + distance);
         System.out.println("azimuth: " + azimuth);
         System.out.println("altitude: " + altitude);
-        System.out.println("orientation: " + orientation);
-        table.putString("orientation", orientation);
         table.putNumber("distance", distance);
         table.putNumber("azimuth", azimuth);
-				table.putNumber("altitude", altitude);
+	table.putNumber("altitude", altitude);
 
     }
     }
